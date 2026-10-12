@@ -104,7 +104,7 @@ export const IngestSection: React.FC<IngestSectionProps> = ({
       <form onSubmit={handleSubmit} className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         
         {/* Left 7 Cols: Video Ingest DropZone */}
-        <div className="lg:col-span-7 space-y-4 bg-brand-surface dark:bg-brand-surface border border-neutral-200 dark:border-neutral-800 p-5">
+        <div className="lg:col-span-7 space-y-4 bg-white dark:bg-brand-surface border border-neutral-200 dark:border-neutral-800 p-5">
           <div className="flex items-center justify-between border-b border-neutral-200 dark:border-neutral-800 pb-2">
             <span className="font-mono text-xs font-bold text-neutral-900 dark:text-white uppercase tracking-wider">
               1. MATCH VIDEO SOURCE
@@ -124,7 +124,7 @@ export const IngestSection: React.FC<IngestSectionProps> = ({
         </div>
 
         {/* Right 5 Cols: Player & Match Configuration */}
-        <div className="lg:col-span-5 space-y-4 bg-brand-surface dark:bg-brand-surface border border-neutral-200 dark:border-neutral-800 p-5">
+        <div className="lg:col-span-5 space-y-4 bg-white dark:bg-brand-surface border border-neutral-200 dark:border-neutral-800 p-5">
           <div className="flex items-center justify-between border-b border-neutral-200 dark:border-neutral-800 pb-2">
             <span className="font-mono text-xs font-bold text-neutral-900 dark:text-white uppercase tracking-wider flex items-center gap-1.5">
               <UserCheck className="w-4 h-4 text-sage-500" />
@@ -151,7 +151,7 @@ export const IngestSection: React.FC<IngestSectionProps> = ({
                     value={p1Name}
                     onChange={(e) => setP1Name(e.target.value)}
                     required
-                    className="w-full px-3 py-1.5 bg-brand-surface dark:bg-brand-surface border border-neutral-300 dark:border-neutral-700 text-neutral-900 dark:text-white font-mono text-xs focus:border-sage-500 outline-none"
+                    className="w-full px-3 py-1.5 bg-white dark:bg-brand-surface border border-neutral-300 dark:border-neutral-700 text-neutral-900 dark:text-white font-mono text-xs focus:border-sage-500 outline-none"
                   />
                 </div>
 
@@ -160,7 +160,7 @@ export const IngestSection: React.FC<IngestSectionProps> = ({
                   <select
                     value={p1Country}
                     onChange={(e) => setP1Country(e.target.value)}
-                    className="w-full px-2 py-1.5 bg-brand-surface dark:bg-brand-surface border border-neutral-300 dark:border-neutral-700 text-neutral-900 dark:text-white font-mono text-xs focus:border-sage-500 outline-none"
+                    className="w-full px-2 py-1.5 bg-white dark:bg-brand-surface border border-neutral-300 dark:border-neutral-700 text-neutral-900 dark:text-white font-mono text-xs focus:border-sage-500 outline-none"
                   >
                     {COUNTRIES.map((c) => (
                       <option key={c.code} value={c.code}>
@@ -187,7 +187,7 @@ export const IngestSection: React.FC<IngestSectionProps> = ({
                     value={p2Name}
                     onChange={(e) => setP2Name(e.target.value)}
                     required
-                    className="w-full px-3 py-1.5 bg-brand-surface dark:bg-brand-surface border border-neutral-300 dark:border-neutral-700 text-neutral-900 dark:text-white font-mono text-xs focus:border-sage-500 outline-none"
+                    className="w-full px-3 py-1.5 bg-white dark:bg-brand-surface border border-neutral-300 dark:border-neutral-700 text-neutral-900 dark:text-white font-mono text-xs focus:border-sage-500 outline-none"
                   />
                 </div>
 
@@ -196,7 +196,7 @@ export const IngestSection: React.FC<IngestSectionProps> = ({
                   <select
                     value={p2Country}
                     onChange={(e) => setP2Country(e.target.value)}
-                    className="w-full px-2 py-1.5 bg-brand-surface dark:bg-brand-surface border border-neutral-300 dark:border-neutral-700 text-neutral-900 dark:text-white font-mono text-xs focus:border-sage-500 outline-none"
+                    className="w-full px-2 py-1.5 bg-white dark:bg-brand-surface border border-neutral-300 dark:border-neutral-700 text-neutral-900 dark:text-white font-mono text-xs focus:border-sage-500 outline-none"
                   >
                     {COUNTRIES.map((c) => (
                       <option key={c.code} value={c.code}>

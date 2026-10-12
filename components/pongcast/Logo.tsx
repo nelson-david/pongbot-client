@@ -23,12 +23,12 @@ export const Logo: React.FC<LogoProps> = ({ size = 'md', showSubtitle = true }) 
   return (
     <div className="flex items-center gap-2.5 select-none">
       {/* Geometric SVG Icon Mark */}
-      <div className={`${iconDimensions} bg-neutral-900 border border-neutral-700 flex items-center justify-center relative overflow-hidden shrink-0 group`}>
+      <div className={`${iconDimensions} bg-white dark:bg-neutral-900 border border-neutral-300 dark:border-neutral-700 flex items-center justify-center relative overflow-hidden shrink-0 group`}>
         <svg viewBox="0 0 32 32" className="w-full h-full p-1" fill="none" xmlns="http://www.w3.org/2000/svg">
           {/* Table Outline */}
-          <polygon points="4,24 28,24 24,12 8,12" stroke="#4A7C59" strokeWidth="1.5" fill="#141414" />
+          <polygon points="4,24 28,24 24,12 8,12" stroke="#4A7C59" strokeWidth="1.5" className="fill-neutral-100 dark:fill-neutral-900" />
           {/* Net Line */}
-          <line x1="16" y1="10" x2="16" y2="24" stroke="#ffffff" strokeWidth="1.5" />
+          <line x1="16" y1="10" x2="16" y2="24" className="stroke-neutral-800 dark:stroke-white" strokeWidth="1.5" />
           {/* Ball Arc */}
           <path d="M 6 22 Q 16 6 26 21" stroke="#50A168" strokeWidth="1.5" strokeDasharray="2,1.5" />
           {/* Ball */}

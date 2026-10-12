@@ -43,7 +43,7 @@ export const PipelineSection: React.FC<PipelineSectionProps> = ({
           </span>
         </div>
 
-        <div className="p-12 bg-brand-surface dark:bg-brand-surface border border-neutral-200 dark:border-neutral-800 flex flex-col items-center justify-center text-center space-y-3">
+        <div className="p-12 bg-white dark:bg-brand-surface border border-neutral-200 dark:border-neutral-800 flex flex-col items-center justify-center text-center space-y-3">
           <PlaySquare className="w-10 h-10 text-neutral-400 dark:text-neutral-600" />
           <h3 className="font-mono text-sm font-bold text-neutral-900 dark:text-white uppercase tracking-wider">
             NO ACTIVE PIPELINE JOB
@@ -84,7 +84,7 @@ export const PipelineSection: React.FC<PipelineSectionProps> = ({
       </div>
 
       {/* Overall Progress Master Card */}
-      <div className="p-4 bg-brand-surface dark:bg-brand-surface border border-neutral-200 dark:border-neutral-800 space-y-3">
+      <div className="p-4 bg-white dark:bg-brand-surface border border-neutral-200 dark:border-neutral-800 space-y-3">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
           <div className="flex items-center gap-3">
             <Activity className={`w-5 h-5 ${isProcessing ? 'text-sage-500 animate-spin' : 'text-neutral-400'}`} />

@@ -46,7 +46,7 @@ export const VideoPlayerContainer: React.FC<VideoPlayerContainerProps> = ({
   };
 
   return (
-    <div className="bg-brand-surface dark:bg-brand-surface border border-neutral-200 dark:border-neutral-800 p-4 space-y-4">
+    <div className="bg-white dark:bg-brand-surface border border-neutral-200 dark:border-neutral-800 p-4 space-y-4">
       
       {/* Player Header & View Switcher */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border-b border-neutral-200 dark:border-neutral-800 pb-3">

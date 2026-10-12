@@ -36,9 +36,9 @@ export const PipelineCard: React.FC<PipelineCardProps> = ({ stage }) => {
   };
 
   return (
-    <div className={`p-4 bg-brand-surface dark:bg-brand-surface border transition-all ${
+    <div className={`p-4 bg-white dark:bg-brand-surface border transition-all ${
       stage.status === 'IN PROCESS'
-        ? 'border-sage-500 shadow-md bg-sage-50/5 dark:bg-sage-950/10'
+        ? 'border-sage-500 shadow-sm bg-sage-50/50 dark:bg-sage-950/20'
         : 'border-neutral-200 dark:border-neutral-800'
     }`}>
       <div className="flex items-center justify-between gap-2 mb-1.5">

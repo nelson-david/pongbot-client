@@ -15,13 +15,13 @@ export const SystemTicker: React.FC<SystemTickerProps> = ({
   videoName,
 }) => {
   return (
-    <div className="w-full bg-neutral-900 border-y border-neutral-800 text-neutral-400 text-xs font-mono py-1.5 px-4 overflow-x-auto select-none">
+    <div className="w-full bg-white dark:bg-neutral-900 border-y border-neutral-200 dark:border-neutral-800 text-neutral-600 dark:text-neutral-400 text-xs font-mono py-1.5 px-4 overflow-x-auto select-none transition-colors">
       <div className="flex items-center justify-between min-w-max gap-8">
         <div className="flex items-center gap-6">
-          <span className="flex items-center gap-1.5 text-neutral-200">
-            <span className={`w-2 h-2 ${isProcessing ? 'bg-amber-500 animate-ping' : hasVideo ? 'bg-sage-500' : 'bg-neutral-600'}`}></span>
-            <span className="text-neutral-400">ENGINE STATUS:</span>
-            <span className="font-bold text-white uppercase">
+          <span className="flex items-center gap-1.5 text-neutral-800 dark:text-neutral-200">
+            <span className={`w-2 h-2 ${isProcessing ? 'bg-amber-500 animate-ping' : hasVideo ? 'bg-sage-500' : 'bg-neutral-400 dark:bg-neutral-600'}`}></span>
+            <span className="text-neutral-500 dark:text-neutral-400">ENGINE STATUS:</span>
+            <span className="font-bold text-neutral-900 dark:text-white uppercase">
               {isProcessing ? '[ PROCESSING MATCH VIDEO ]' : hasVideo ? `[ READY: ${videoName} ]` : '[ IDLE • AWAITING MATCH VIDEO ]'}
             </span>
           </span>

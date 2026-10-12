@@ -66,11 +66,11 @@ export const DropZone: React.FC<DropZoneProps> = ({
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
         onDrop={handleDrop}
-        className={`relative p-8 md:p-10 border border-dashed transition-all flex flex-col items-center justify-center text-center cursor-pointer bg-brand-surface dark:bg-brand-surface ${
+        className={`relative p-8 md:p-10 border border-dashed transition-all flex flex-col items-center justify-center text-center cursor-pointer bg-white dark:bg-brand-surface ${
           isDragging
-            ? 'border-sage-500 bg-sage-50/10 dark:bg-sage-950/20'
+            ? 'border-sage-500 bg-sage-50/50 dark:bg-sage-950/20'
             : hasVideo
-            ? 'border-sage-500/80 bg-neutral-900/40'
+            ? 'border-sage-500/80 bg-neutral-100/70 dark:bg-neutral-900/40'
             : 'border-neutral-300 dark:border-neutral-800 hover:border-neutral-400 dark:hover:border-neutral-600'
         }`}
       >

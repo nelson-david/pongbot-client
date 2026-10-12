@@ -410,7 +410,7 @@ export default function HomePage() {
       </main>
 
       {/* 4. Footer */}
-      <footer className="w-full bg-brand-surface border-t border-neutral-200 dark:border-neutral-800 py-4 px-6 font-mono text-xs text-neutral-500 flex flex-col sm:flex-row items-center justify-between gap-2">
+      <footer className="w-full bg-white dark:bg-brand-surface border-t border-neutral-200 dark:border-neutral-800 py-4 px-6 font-mono text-xs text-neutral-500 flex flex-col sm:flex-row items-center justify-between gap-2">
         <span>© 2026 PONGCAST ENGINE // <Link href={"https://theurbandev.xyz"} target="_blank" className='underline text-sage-500'>DAVID OGWU-NELSON</Link></span>
         <div className="flex items-center gap-4">
           <span className="text-sage-500 font-bold">[ ITTF RULES VERIFIED ]</span>

@@ -23,7 +23,7 @@ export const TelemetryCard: React.FC<TelemetryCardProps> = ({
     <div className="space-y-6">
       
       {/* Scorecard Overlay Theme Selector */}
-      <div className="p-4 bg-brand-surface dark:bg-brand-surface border border-neutral-200 dark:border-neutral-800 space-y-3">
+      <div className="p-4 bg-white dark:bg-brand-surface border border-neutral-200 dark:border-neutral-800 space-y-3">
         <div className="flex items-center justify-between">
           <span className="font-mono text-xs font-bold text-neutral-900 dark:text-white uppercase tracking-wider flex items-center gap-1.5">
             <Palette className="w-4 h-4 text-sage-500" />
@@ -61,7 +61,7 @@ export const TelemetryCard: React.FC<TelemetryCardProps> = ({
       <div className="grid grid-cols-2 gap-3">
         
         {/* Total Rallies */}
-        <div className="p-3 bg-brand-surface dark:bg-brand-surface border border-neutral-200 dark:border-neutral-800">
+        <div className="p-3 bg-white dark:bg-brand-surface border border-neutral-200 dark:border-neutral-800">
           <span className="font-mono text-[10px] text-neutral-500 uppercase block mb-1">
             TOTAL RALLIES
           </span>
@@ -73,7 +73,7 @@ export const TelemetryCard: React.FC<TelemetryCardProps> = ({
         </div>
 
         {/* Longest Exchange */}
-        <div className="p-3 bg-brand-surface dark:bg-brand-surface border border-neutral-200 dark:border-neutral-800">
+        <div className="p-3 bg-white dark:bg-brand-surface border border-neutral-200 dark:border-neutral-800">
           <span className="font-mono text-[10px] text-neutral-500 uppercase block mb-1">
             LONGEST EXCHANGE
           </span>
@@ -85,7 +85,7 @@ export const TelemetryCard: React.FC<TelemetryCardProps> = ({
         </div>
 
         {/* Peak Smash Speed */}
-        <div className="p-3 bg-brand-surface dark:bg-brand-surface border border-neutral-200 dark:border-neutral-800">
+        <div className="p-3 bg-white dark:bg-brand-surface border border-neutral-200 dark:border-neutral-800">
           <span className="font-mono text-[10px] text-neutral-500 uppercase block mb-1">
             PEAK SMASH SPEED
           </span>
@@ -97,7 +97,7 @@ export const TelemetryCard: React.FC<TelemetryCardProps> = ({
         </div>
 
         {/* Edge / Let Calls */}
-        <div className="p-3 bg-brand-surface dark:bg-brand-surface border border-neutral-200 dark:border-neutral-800">
+        <div className="p-3 bg-white dark:bg-brand-surface border border-neutral-200 dark:border-neutral-800">
           <span className="font-mono text-[10px] text-neutral-500 uppercase block mb-1">
             EDGE / NET CALLS
           </span>
@@ -111,7 +111,7 @@ export const TelemetryCard: React.FC<TelemetryCardProps> = ({
       </div>
 
       {/* Set Breakdown & Performance Ratios */}
-      <div className="p-4 bg-brand-surface dark:bg-brand-surface border border-neutral-200 dark:border-neutral-800 space-y-4">
+      <div className="p-4 bg-white dark:bg-brand-surface border border-neutral-200 dark:border-neutral-800 space-y-4">
         <div className="flex items-center justify-between border-b border-neutral-200 dark:border-neutral-800 pb-2">
           <span className="font-mono text-xs font-bold text-neutral-900 dark:text-white uppercase tracking-wider flex items-center gap-1.5">
             <BarChart3 className="w-4 h-4 text-sage-500" />

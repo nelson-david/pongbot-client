@@ -29,7 +29,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   ];
 
   return (
-    <header className="w-full bg-brand-surface dark:bg-brand-surface border-b border-neutral-200 dark:border-neutral-800 transition-colors">
+    <header className="w-full bg-white dark:bg-brand-surface border-b border-neutral-200 dark:border-neutral-800 transition-colors">
       <div className="max-w-[1920px] mx-auto px-4 md:px-6 py-3 flex items-center justify-between gap-4">
         
         {/* Left: Brand Logo */}

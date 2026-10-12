@@ -40,7 +40,7 @@ export const ExportBar: React.FC<ExportBarProps> = ({
 
   return (
     <>
-      <div className="p-5 bg-brand-surface dark:bg-brand-surface border border-neutral-200 dark:border-neutral-800 space-y-4">
+      <div className="p-5 bg-white dark:bg-brand-surface border border-neutral-200 dark:border-neutral-800 space-y-4">
         
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-neutral-200 dark:border-neutral-800 pb-3">

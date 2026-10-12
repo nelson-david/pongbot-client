@@ -48,7 +48,7 @@ export const LogConsole: React.FC<LogConsoleProps> = ({ logs, onClearLogs }) => 
         <div className="flex items-center gap-2">
           <Terminal className="w-4 h-4 text-sage-500" />
           <span className="font-bold text-white uppercase tracking-wider">
-            TERMINAL LOG STREAM // PYTHON ENGINE OUTPUT
+            TERMINAL LOG STREAM
           </span>
           <span className="px-1.5 py-0.5 bg-neutral-900 border border-neutral-800 text-[10px] text-sage-400">
             STDOUT / STDERR
