@@ -180,7 +180,7 @@ export default function HomePage() {
                     { ...s[0], status: pct >= 20 ? 'COMPLETED' : 'IN PROCESS', progress: Math.min(100, Math.max(10, pct * 5)) },
                     { ...s[1], status: pct >= 20 && pct < 70 ? 'IN PROCESS' : pct >= 70 ? 'COMPLETED' : 'QUEUED', progress: Math.max(0, Math.min(100, (pct - 20) * 2)) },
                     { ...s[2], status: pct >= 50 && pct < 90 ? 'IN PROCESS' : pct >= 90 ? 'COMPLETED' : 'QUEUED', progress: Math.max(0, Math.min(100, (pct - 50) * 2.5)) },
-                    { ...s[3], status: pct >= 85 ? 'IN PROCESS' : 'QUEUED', progress: Math.max(0, Math.min(100, (pct - 85) * 6.6)) },
+                    { ...s[3], status: pct >= 100 ? 'COMPLETED' : pct >= 85 ? 'IN PROCESS' : 'QUEUED', progress: Math.max(0, Math.min(100, (pct - 85) * 6.7)) },
                   ]);
 
                   if (payload.score) {
@@ -198,30 +198,11 @@ export default function HomePage() {
                   setEta('00:00.0s');
                   setIsProcessing(false);
                   setHasProcessed(true);
-                  if (res.video_url) {
-                    setVideoUrl(res.video_url);
-
-                    // Use fetch + blob for cross-origin safe download.
-                    // The `download` attribute on <a> is ignored for cross-origin
-                    // URLs (per HTML spec), causing browser navigation instead of
-                    // download — which destroys the React SPA state entirely.
-                    try {
-                      const dlResponse = await fetch(res.video_url);
-                      const blob = await dlResponse.blob();
-                      const blobUrl = URL.createObjectURL(blob);
-                      const downloadLink = document.createElement('a');
-                      downloadLink.href = blobUrl;
-                      downloadLink.download = `pongcast_${newP1.name.split(' ')[0]}_vs_${newP2.name.split(' ')[0]}_broadcast.mp4`;
-                      document.body.appendChild(downloadLink);
-                      downloadLink.click();
-                      document.body.removeChild(downloadLink);
-                      URL.revokeObjectURL(blobUrl);
-                    } catch (dlErr) {
-                      console.warn('Auto-download error:', dlErr);
-                    }
-                  }
                   setStages((s) => s.map((st) => ({ ...st, status: 'COMPLETED', progress: 100 })));
 
+                  if (res.video_url) {
+                    setVideoUrl(res.video_url);
+                  }
                   if (res.score_state) {
                     setScoreState({
                       p1Pts: res.score_state.p1_pts,
@@ -235,8 +216,31 @@ export default function HomePage() {
                     setTelemetry(res.telemetry);
                   }
 
-                  // Automatically switch to Broadcast Suite view when done!
+                  // Switch to Broadcast Suite view IMMEDIATELY
                   setActiveMode('broadcast');
+
+                  // Fire download in background (non-blocking).
+                  // Uses fetch + blob for cross-origin safe download.
+                  // The `download` attribute on <a> is ignored for cross-origin
+                  // URLs (per HTML spec), so we fetch as blob first.
+                  if (res.video_url) {
+                    (async () => {
+                      try {
+                        const dlResponse = await fetch(res.video_url);
+                        const blob = await dlResponse.blob();
+                        const blobUrl = URL.createObjectURL(blob);
+                        const downloadLink = document.createElement('a');
+                        downloadLink.href = blobUrl;
+                        downloadLink.download = `pongcast_${newP1.name.split(' ')[0]}_vs_${newP2.name.split(' ')[0]}_broadcast.mp4`;
+                        document.body.appendChild(downloadLink);
+                        downloadLink.click();
+                        document.body.removeChild(downloadLink);
+                        URL.revokeObjectURL(blobUrl);
+                      } catch (dlErr) {
+                        console.warn('Auto-download error:', dlErr);
+                      }
+                    })();
+                  }
                 } else if (payload.type === 'error') {
                   const errorMsg = payload.error || 'Unknown processing error occurred in engine.';
                   console.error('Server processing error:', errorMsg);
@@ -276,27 +280,11 @@ export default function HomePage() {
                   setEta('00:00.0s');
                   setIsProcessing(false);
                   setHasProcessed(true);
-                  if (res.video_url) {
-                    setVideoUrl(res.video_url);
-
-                    // Use fetch + blob for cross-origin safe download
-                    try {
-                      const dlResponse = await fetch(res.video_url);
-                      const blob = await dlResponse.blob();
-                      const blobUrl = URL.createObjectURL(blob);
-                      const downloadLink = document.createElement('a');
-                      downloadLink.href = blobUrl;
-                      downloadLink.download = `pongcast_${newP1.name.split(' ')[0]}_vs_${newP2.name.split(' ')[0]}_broadcast.mp4`;
-                      document.body.appendChild(downloadLink);
-                      downloadLink.click();
-                      document.body.removeChild(downloadLink);
-                      URL.revokeObjectURL(blobUrl);
-                    } catch (dlErr) {
-                      console.warn('Auto-download error (buffer flush):', dlErr);
-                    }
-                  }
                   setStages((s) => s.map((st) => ({ ...st, status: 'COMPLETED', progress: 100 })));
 
+                  if (res.video_url) {
+                    setVideoUrl(res.video_url);
+                  }
                   if (res.score_state) {
                     setScoreState({
                       p1Pts: res.score_state.p1_pts,
@@ -310,6 +298,26 @@ export default function HomePage() {
                     setTelemetry(res.telemetry);
                   }
                   setActiveMode('broadcast');
+
+                  // Fire download in background (non-blocking)
+                  if (res.video_url) {
+                    (async () => {
+                      try {
+                        const dlResponse = await fetch(res.video_url);
+                        const blob = await dlResponse.blob();
+                        const blobUrl = URL.createObjectURL(blob);
+                        const downloadLink = document.createElement('a');
+                        downloadLink.href = blobUrl;
+                        downloadLink.download = `pongcast_${newP1.name.split(' ')[0]}_vs_${newP2.name.split(' ')[0]}_broadcast.mp4`;
+                        document.body.appendChild(downloadLink);
+                        downloadLink.click();
+                        document.body.removeChild(downloadLink);
+                        URL.revokeObjectURL(blobUrl);
+                      } catch (dlErr) {
+                        console.warn('Auto-download error (buffer flush):', dlErr);
+                      }
+                    })();
+                  }
                 } else if (payload.type === 'error') {
                   const errorMsg = payload.error || 'Unknown processing error occurred in engine.';
                   console.error('Server processing error (buffer flush):', errorMsg);
