@@ -16,6 +16,7 @@ export default function HomePage() {
   const [activeMode, setActiveMode] = useState<ActiveMode>('ingest');
   const [isProcessing, setIsProcessing] = useState<boolean>(false);
   const [hasProcessed, setHasProcessed] = useState<boolean>(false);
+  const [hasJobStarted, setHasJobStarted] = useState<boolean>(false);
   const [videoName, setVideoName] = useState<string>('');
   const [videoUrl, setVideoUrl] = useState<string>('');
 
@@ -88,6 +89,7 @@ export default function HomePage() {
       setScoreState({ p1Pts: 0, p2Pts: 0, p1Games: 0, p2Games: 0, server: initialServer });
       setIsProcessing(true);
       setHasProcessed(false);
+      setHasJobStarted(true);
       setOverallProgress(5);
       setEta('00:08.5s');
       setActiveMode('pipeline'); // Switch to pipeline view to watch live stream
@@ -198,6 +200,18 @@ export default function HomePage() {
                   setHasProcessed(true);
                   if (res.video_url) {
                     setVideoUrl(res.video_url);
+
+                    // Automatically trigger direct download to user's device
+                    try {
+                      const downloadLink = document.createElement('a');
+                      downloadLink.href = res.video_url;
+                      downloadLink.download = `pongcast_${newP1.name.split(' ')[0]}_vs_${newP2.name.split(' ')[0]}_broadcast.mp4`;
+                      document.body.appendChild(downloadLink);
+                      downloadLink.click();
+                      document.body.removeChild(downloadLink);
+                    } catch (dlErr) {
+                      console.warn('Auto-download error:', dlErr);
+                    }
                   }
                   setStages((s) => s.map((st) => ({ ...st, status: 'COMPLETED', progress: 100 })));
 
@@ -217,8 +231,22 @@ export default function HomePage() {
                   // Automatically switch to Broadcast Suite view when done!
                   setActiveMode('broadcast');
                 } else if (payload.type === 'error') {
-                  console.error('Server processing error:', payload.error);
+                  const errorMsg = payload.error || 'Unknown processing error occurred in engine.';
+                  console.error('Server processing error:', errorMsg);
                   setIsProcessing(false);
+                  setHasProcessed(false);
+                  setStages((s) =>
+                    s.map((st) => (st.status === 'IN PROCESS' ? { ...st, status: 'QUEUED' } : st))
+                  );
+                  setLogs((prev) => [
+                    ...prev,
+                    {
+                      id: Date.now().toString(),
+                      timestamp: new Date().toTimeString().split(' ')[0],
+                      level: 'ERROR',
+                      message: `ENGINE ERROR: ${errorMsg}`,
+                    },
+                  ]);
                 }
               } catch (parseErr) {
                 console.error('Parse error on stream chunk', parseErr);
@@ -226,9 +254,41 @@ export default function HomePage() {
             }
           }
           return;
+        } else {
+          // Response returned non-200 status code (e.g. 500, 413, 404)
+          let serverErrMsg = `HTTP ${response.status}: ${response.statusText}`;
+          try {
+            const errJson = await response.json();
+            if (errJson.error) serverErrMsg = errJson.error;
+          } catch {
+            // body was not JSON
+          }
+          console.error('Server request failed:', serverErrMsg);
+          setIsProcessing(false);
+          setLogs((prev) => [
+            ...prev,
+            {
+              id: Date.now().toString(),
+              timestamp: new Date().toTimeString().split(' ')[0],
+              level: 'ERROR',
+              message: `SERVER ERROR: ${serverErrMsg}`,
+            },
+          ]);
+          return;
         }
-      } catch (err) {
-        console.warn(`Backend server not reachable at ${API_BASE}, using standalone simulation fallback.`, err);
+      } catch (err: any) {
+        console.error(`Backend server error at ${API_BASE}:`, err);
+        setIsProcessing(false);
+        setLogs((prev) => [
+          ...prev,
+          {
+            id: Date.now().toString(),
+            timestamp: new Date().toTimeString().split(' ')[0],
+            level: 'ERROR',
+            message: `NETWORK / SERVER ERROR: Could not connect to engine at ${API_BASE}. ${err?.message || ''}`,
+          },
+        ]);
+        return;
       }
 
       // Fallback simulation if backend is unavailable
@@ -280,7 +340,7 @@ export default function HomePage() {
     []
   );
 
-  const hasStarted = isProcessing || hasProcessed;
+  const hasStarted = isProcessing || hasProcessed || hasJobStarted;
 
   return (
     <div className="min-h-screen bg-brand-lightBg text-neutral-900 dark:bg-brand-dark dark:text-neutral-100 flex flex-col font-sans transition-colors duration-200">

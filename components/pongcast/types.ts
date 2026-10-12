@@ -19,7 +19,7 @@ export interface PipelineStage {
 export interface LogEntry {
   id: string;
   timestamp: string;
-  level: 'INFO' | 'TRAJECTORY' | 'BOUNCE' | 'SCORE' | 'SUCCESS';
+  level: 'INFO' | 'TRAJECTORY' | 'BOUNCE' | 'SCORE' | 'SUCCESS' | 'ERROR';
   message: string;
 }
 

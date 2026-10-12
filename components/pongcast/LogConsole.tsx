@@ -28,6 +28,8 @@ export const LogConsole: React.FC<LogConsoleProps> = ({ logs, onClearLogs }) => 
         return 'text-sage-400 font-bold';
       case 'SUCCESS':
         return 'text-emerald-400 font-bold';
+      case 'ERROR':
+        return 'text-rose-400 font-bold';
       default:
         return 'text-neutral-400';
     }
