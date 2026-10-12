@@ -155,7 +155,7 @@ export const DropZone: React.FC<DropZoneProps> = ({
       )}
 
       {/* Preset Sample Trigger Button */}
-      {!hasVideo && (
+      {/* {!hasVideo && (
         <div className="flex items-center justify-between p-3 bg-neutral-100 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800">
           <div className="flex items-center gap-2">
             <FileVideo className="w-4 h-4 text-sage-500" />
@@ -171,7 +171,7 @@ export const DropZone: React.FC<DropZoneProps> = ({
             [ LOAD DEMO CLIP (30s) ]
           </button>
         </div>
-      )}
+      )} */}
     </div>
   );
 };

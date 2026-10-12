@@ -201,14 +201,21 @@ export default function HomePage() {
                   if (res.video_url) {
                     setVideoUrl(res.video_url);
 
-                    // Automatically trigger direct download to user's device
+                    // Use fetch + blob for cross-origin safe download.
+                    // The `download` attribute on <a> is ignored for cross-origin
+                    // URLs (per HTML spec), causing browser navigation instead of
+                    // download — which destroys the React SPA state entirely.
                     try {
+                      const dlResponse = await fetch(res.video_url);
+                      const blob = await dlResponse.blob();
+                      const blobUrl = URL.createObjectURL(blob);
                       const downloadLink = document.createElement('a');
-                      downloadLink.href = res.video_url;
+                      downloadLink.href = blobUrl;
                       downloadLink.download = `pongcast_${newP1.name.split(' ')[0]}_vs_${newP2.name.split(' ')[0]}_broadcast.mp4`;
                       document.body.appendChild(downloadLink);
                       downloadLink.click();
                       document.body.removeChild(downloadLink);
+                      URL.revokeObjectURL(blobUrl);
                     } catch (dlErr) {
                       console.warn('Auto-download error:', dlErr);
                     }
@@ -250,6 +257,78 @@ export default function HomePage() {
                 }
               } catch (parseErr) {
                 console.error('Parse error on stream chunk', parseErr);
+              }
+            }
+          }
+
+          // CRITICAL: Flush any remaining data in buffer after stream closes.
+          // The server's final 'done' event may not be followed by \n\n before
+          // the stream ends, leaving it stranded in the buffer. Process it now.
+          if (buffer.trim()) {
+            const remaining = buffer.trim();
+            if (remaining.startsWith('data: ')) {
+              try {
+                const payload = JSON.parse(remaining.slice(6));
+
+                if (payload.type === 'done') {
+                  const res = payload.result;
+                  setOverallProgress(100);
+                  setEta('00:00.0s');
+                  setIsProcessing(false);
+                  setHasProcessed(true);
+                  if (res.video_url) {
+                    setVideoUrl(res.video_url);
+
+                    // Use fetch + blob for cross-origin safe download
+                    try {
+                      const dlResponse = await fetch(res.video_url);
+                      const blob = await dlResponse.blob();
+                      const blobUrl = URL.createObjectURL(blob);
+                      const downloadLink = document.createElement('a');
+                      downloadLink.href = blobUrl;
+                      downloadLink.download = `pongcast_${newP1.name.split(' ')[0]}_vs_${newP2.name.split(' ')[0]}_broadcast.mp4`;
+                      document.body.appendChild(downloadLink);
+                      downloadLink.click();
+                      document.body.removeChild(downloadLink);
+                      URL.revokeObjectURL(blobUrl);
+                    } catch (dlErr) {
+                      console.warn('Auto-download error (buffer flush):', dlErr);
+                    }
+                  }
+                  setStages((s) => s.map((st) => ({ ...st, status: 'COMPLETED', progress: 100 })));
+
+                  if (res.score_state) {
+                    setScoreState({
+                      p1Pts: res.score_state.p1_pts,
+                      p2Pts: res.score_state.p2_pts,
+                      p1Games: res.score_state.p1_games,
+                      p2Games: res.score_state.p2_games,
+                      server: res.score_state.server,
+                    });
+                  }
+                  if (res.telemetry) {
+                    setTelemetry(res.telemetry);
+                  }
+                  setActiveMode('broadcast');
+                } else if (payload.type === 'error') {
+                  const errorMsg = payload.error || 'Unknown processing error occurred in engine.';
+                  console.error('Server processing error (buffer flush):', errorMsg);
+                  setIsProcessing(false);
+                  setHasProcessed(false);
+                  setLogs((prev) => [
+                    ...prev,
+                    {
+                      id: Date.now().toString(),
+                      timestamp: new Date().toTimeString().split(' ')[0],
+                      level: 'ERROR',
+                      message: `ENGINE ERROR: ${errorMsg}`,
+                    },
+                  ]);
+                } else if (payload.type === 'log') {
+                  setLogs((prev) => [...prev, payload.log]);
+                }
+              } catch (flushErr) {
+                console.error('Parse error on buffer flush:', flushErr);
               }
             }
           }

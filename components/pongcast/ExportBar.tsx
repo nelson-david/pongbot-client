@@ -28,14 +28,24 @@ export const ExportBar: React.FC<ExportBarProps> = ({
 }) => {
   const [modalType, setModalType] = useState<'pdf' | 'highlights' | 'download' | null>(null);
 
-  const handleDirectDownload = () => {
+  const handleDirectDownload = async () => {
     const downloadUrl = videoUrl || `${process.env.NEXT_PUBLIC_API_URL || ''}/outputs/test_out.mp4`;
-    const link = document.createElement('a');
-    link.href = downloadUrl;
-    link.download = `pongcast_${p1.name.split(' ')[0]}_vs_${p2.name.split(' ')[0]}_broadcast.mp4`;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    try {
+      const response = await fetch(downloadUrl);
+      const blob = await response.blob();
+      const blobUrl = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = blobUrl;
+      link.download = `pongcast_${p1.name.split(' ')[0]}_vs_${p2.name.split(' ')[0]}_broadcast.mp4`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(blobUrl);
+    } catch (err) {
+      console.warn('Download error:', err);
+      // Fallback: open in new tab
+      window.open(downloadUrl, '_blank');
+    }
   };
 
   return (
