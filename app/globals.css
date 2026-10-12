@@ -1,0 +1,32 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+@layer base {
+  * {
+    border-radius: 0px !important;
+  }
+
+  body {
+    @apply font-sans antialiased transition-colors duration-200;
+  }
+}
+
+/* Custom scrollbars for industrial tech look */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-neutral-100 dark:bg-neutral-900;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-neutral-400 dark:bg-neutral-700 hover:bg-sage-500;
+}
+
+/* Tabular figures for monospace numbers */
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}

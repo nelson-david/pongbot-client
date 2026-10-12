@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <!-- Dark Charcoal Base -->
+  <rect width="64" height="64" fill="#0d0d0d"/>
+  
+  <!-- Outer Technical Border -->
+  <rect x="2" y="2" width="60" height="60" fill="none" stroke="#2a2a2a" stroke-width="2"/>
+  
+  <!-- Table Tennis Table Boundary (Orthogonal Perspective) -->
+  <polygon points="8,44 56,44 48,22 16,22" fill="#141414" stroke="#4A7C59" stroke-width="2"/>
+  
+  <!-- Center Net Line -->
+  <line x1="32" y1="18" x2="32" y2="44" stroke="#ffffff" stroke-width="2"/>
+  
+  <!-- Glowing Ball Trajectory Arc -->
+  <path d="M 12 40 Q 32 10 52 38" fill="none" stroke="#50A168" stroke-width="2.5" stroke-dasharray="3,2"/>
+  
+  <!-- Ball Core -->
+  <circle cx="32" cy="17" r="3.5" fill="#50A168"/>
+  <circle cx="32" cy="17" r="5" fill="none" stroke="#ffffff" stroke-width="1"/>
+  
+  <!-- Technical Crosshairs / HUD Corner Accents -->
+  <line x1="4" y1="4" x2="10" y2="4" stroke="#50A168" stroke-width="1.5"/>
+  <line x1="4" y1="4" x2="4" y2="10" stroke="#50A168" stroke-width="1.5"/>
+  
+  <line x1="60" y1="4" x2="54" y2="4" stroke="#50A168" stroke-width="1.5"/>
+  <line x1="60" y1="4" x2="60" y2="10" stroke="#50A168" stroke-width="1.5"/>
+  
+  <line x1="4" y1="60" x2="10" y2="60" stroke="#50A168" stroke-width="1.5"/>
+  <line x1="4" y1="60" x2="4" y2="54" stroke="#50A168" stroke-width="1.5"/>
+  
+  <line x1="60" y1="60" x2="54" y2="60" stroke="#50A168" stroke-width="1.5"/>
+  <line x1="60" y1="60" x2="60" y2="54" stroke="#50A168" stroke-width="1.5"/>
+</svg>
